@@ -14,6 +14,10 @@ Run:
 
 ### TEST IT: VISUAL STUDIO
 
+Double-click `Project.vcxproj`. Select "Build"->"Build Solution".
+
+Now run `.\x64\Debug\Project.exe`.
+
 ## LICENSE
 
 The contents of this directory were created by Andi McClure for Love Conquers All Games. It is made available to you under the Creative Commons Zero license (effectively public domain).
