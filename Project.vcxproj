@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+ <!-- First off here's some boilerplate, you can skip this -->
+ <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win64">
+      <Configuration>Debug</Configuration>
+      <Platform>Win64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win64">
+      <Configuration>Release</Configuration>
+      <Platform>Win64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1f5d2884-3c81-4915-a600-ef0de089f566}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets" />
+  <PropertyGroup Label="UserMacros" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+
+  <!-- Okay here's the relevant part -->
+
+  <!-- Step 1: Load SharedFiles.txt in as a string -->
+  <PropertyGroup>
+    <CmakeSharedFilenames_raw>$([System.IO.File]::ReadAllText('$(ProjectDir)SharedFiles.txt').TrimStart().TrimEnd())</CmakeSharedFilenames_raw>
+  </PropertyGroup>
+
+  <!-- Step 2 (optional): Perform a path transformation on each item, in this case prepending src/ -->
+  <PropertyGroup>
+    <CmakeSharedFilenames_raw_pathfix>$([System.Text.RegularExpressions.Regex]::Replace("$(CmakeSharedFilenames_raw)", "^", "src\", "System.Text.RegularExpressions.RegexOptions.Multiline"))</CmakeSharedFilenames_raw_pathfix>
+  </PropertyGroup>
+
+  <!-- Step 3: Convert from a string to a list -->
+  <!-- If you skip step 2, change CmakeSharedFilenames_raw_pathfix here to CmakeSharedFilenames_raw -->
+  <PropertyGroup>
+    <CmakeSharedFilenames>$([System.Text.RegularExpressions.Regex]::Split("$(CmakeSharedFilenames_raw_pathfix)", "\r?\n", "System.Text.RegularExpressions.RegexOptions.Singleline"))</CmakeSharedFilenames>
+  </PropertyGroup>
+
+  <!-- Step 4: Compile the list -->
+  <ItemGroup>
+    <!-- Shared files -->
+    <!-- To add files to this list, edit SharedFiles.txt -->
+    <ClCompile Include="$(CmakeSharedFilenames)" />
+
+    <!-- MSVC unique files -->
+    <ClCompile Include="src/msvc-only.cpp" />
+  </ItemGroup>
+
+  <!-- Uncomment to print out the shared filenames list -->
+  <!-- <Target Name="DemoPrintout" BeforeTargets="ClCompile">
+		<Warning
+			Text="In vcxproj, ProjectDir $(ProjectDir), shared files $(CmakeSharedFilenames)" />
+	</Target> -->
+</Project>
