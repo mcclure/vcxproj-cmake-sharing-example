@@ -14,7 +14,7 @@ Run:
 
 ### TEST IT: VISUAL STUDIO
 
-Double-click `Project.vcxproj`. Select "Build"->"Build Solution".
+Double-click `Project.vcxproj`. Let it upgrade if it wants (this may remove the vcxproj). Select "Build"->"Build Solution".
 
 Now run `.\x64\Debug\Project.exe`.
 
