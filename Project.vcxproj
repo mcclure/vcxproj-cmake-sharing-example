@@ -38,29 +38,14 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
 
-  <!-- Okay here's the relevant part -->
-
-  <!-- Step 1: Load SharedFiles.txt in as a string -->
-  <PropertyGroup>
-    <CmakeSharedFilenames_raw>$([System.IO.File]::ReadAllText('$(ProjectDir)SharedFiles.txt').TrimStart().TrimEnd())</CmakeSharedFilenames_raw>
-  </PropertyGroup>
-
-  <!-- Step 2 (optional): Perform a path transformation on each item, in this case prepending src/ -->
-  <PropertyGroup>
-    <CmakeSharedFilenames_raw_pathfix>$([System.Text.RegularExpressions.Regex]::Replace("$(CmakeSharedFilenames_raw)", "^", "src\", "System.Text.RegularExpressions.RegexOptions.Multiline"))</CmakeSharedFilenames_raw_pathfix>
-  </PropertyGroup>
-
-  <!-- Step 3: Convert from a string to a list -->
-  <!-- If you skip step 2, change CmakeSharedFilenames_raw_pathfix here to CmakeSharedFilenames_raw -->
-  <PropertyGroup>
-    <CmakeSharedFilenames>$([System.Text.RegularExpressions.Regex]::Split("$(CmakeSharedFilenames_raw_pathfix)", "\r?\n", "System.Text.RegularExpressions.RegexOptions.Singleline"))</CmakeSharedFilenames>
-  </PropertyGroup>
-
-  <!-- Step 4: Compile the list -->
   <ItemGroup>
+    <!-- Okay here's the relevant part -->
+
     <!-- Shared files -->
-    <!-- To add files to this list, edit SharedFiles.txt -->
-    <ClCompile Include="$(CmakeSharedFilenames)" />
+    <CmakeSharedFilenames Include="$([System.IO.File]::ReadAllText('$(ProjectDir)SharedFiles.txt').Trim().Split($([System.Environment]::NewLine), StringSplitOptions.RemoveEmptyEntries))" />
+
+    <!-- To add files to the shared list, edit SharedFiles.txt -->
+    <ClCompile Include="@(CmakeSharedFilenames->'src\%(Filename)%(Extension)')" />
 
     <!-- MSVC unique files -->
     <ClCompile Include="src/msvc-only.cpp" />

@@ -26,6 +26,5 @@ The contents of this directory were created by Andi McClure for Love Conquers Al
 
 Things I wonder but do not care enough to find out:
 
-* Could the three "steps" in Project.vcxproj be collapsed into one? Would that make the MSBuild code look cleaner?
 * Could one publish some sort of MSBuild "library" so that you could just collapse the vcxproj "steps" into a function, and then just write `<ClCompile Include="$([FileInclude]::List('SharedFiles.txt', 'src/''))" />` or something?
 
