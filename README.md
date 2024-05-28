@@ -28,4 +28,5 @@ Things I wonder but do not care enough to find out:
 
 * Could the three "steps" in Project.vcxproj be collapsed into one? Would that make the MSBuild code look cleaner?
 * Could one publish some sort of MSBuild "library" so that you could just collapse the vcxproj "steps" into a function, and then just write `<ClCompile Include="$([FileInclude]::List('SharedFiles.txt', 'src/''))" />` or something?
+  * No: MSBuild does not support custom property functions as of 17.11, and doesn't currently have a plan to.
 
