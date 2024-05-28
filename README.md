@@ -4,7 +4,7 @@ It turns out it's possible to just keep a list of filenames in a .txt file, and 
 
 ## CONTENTS
 
-The program consists of some trivial C++ files in `src/`, a CMake build script in `CMakeLists.txt`, a MSBuild build script in `Project.vcxproj`, and a list of filenames in `SharedFiles.txt`. The process to compile the contents of `SharedFiles.txt` is in lines 43-57 on Project.vcxproj and lines 7-11 in `CMakeLists.txt`. It's simpler in CMake.
+The program consists of some trivial C++ files in [`src/`](src), a CMake build script in [`CMakeLists.txt`](CMakeLists.txt), a MSBuild build script in [`Project.vcxproj`](Project.vcxproj), and a list of filenames in [`SharedFiles.txt`](SharedFiles.txt). The process to compile the contents of `SharedFiles.txt` is in lines 43-57 on `Project.vcxproj` and lines 7-11 in `CMakeLists.txt`. It's simpler in CMake.
 
 ### TEST IT: CMAKE
 
@@ -14,13 +14,13 @@ Run:
 
 ### TEST IT: VISUAL STUDIO
 
-Double-click `Project.vcxproj`. Let it upgrade if it wants (this may remove the vcxproj). Select "Build"->"Build Solution".
+Double-click `Project.vcxproj`. Let it upgrade if it wants (this may alter the vcxproj). Select "Build"->"Build Solution".
 
 Now run `.\x64\Debug\Project.exe`.
 
 ## LICENSE
 
-The contents of this directory were created by Andi McClure for Love Conquers All Games. It is made available to you under the Creative Commons Zero license (effectively public domain).
+The contents of this directory were created by Andi McClure for Love Conquers All Games. It is made available to you under the [Creative Commons Zero](https://creativecommons.org/publicdomain/zero/1.0/) license (effectively public domain).
 
 ## ROOM FOR IMPROVEMENT?
 
